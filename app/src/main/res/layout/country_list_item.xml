@@ -5,18 +5,26 @@
 	xmlns:tools = "http://schemas.android.com/tools">
 
 	<data>
-
+		<variable
+				name = "item"
+				type = "ru.orehovai.testiceborn.model.Country"
+		/>
+		<import type="android.view.View"/>
 	</data>
 
 	<android.support.constraint.ConstraintLayout
-		android:layout_width = "wrap_content"
-		android:layout_height = "match_parent"
-		>
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+	>
 		<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:id="@+id/tv_county_name"
-				app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:id="@+id/tv_county_name"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintTop_toTopOf="parent"
-				app:layout_constraintEnd_toEndOf="parent"/>
+				app:layout_constraintEnd_toEndOf="parent"
+				android:text="@{item.name}"
+				android:visibility="@{item.is_used? View.VISIBLE:View.GONE}"/>
 	</android.support.constraint.ConstraintLayout>
 </layout>

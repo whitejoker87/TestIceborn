@@ -11,12 +11,13 @@ import android.view.ViewGroup
 import ru.orehovai.easycar.ui.fragments.applic.CountryListAdapter
 import ru.orehovai.testiceborn.databinding.ContinentListItemBinding
 import ru.orehovai.testiceborn.model.Continent
+import ru.orehovai.testiceborn.model.Country
 import java.util.*
 
 class
-ContinentListAdapter(data: ArrayList<Continent>, private val context: Context) : RecyclerView.Adapter<ContinentListAdapter.ListPartsHolder>() {
+ContinentListAdapter(data: MutableList<MutableList<Country>>, private val context: Context) : RecyclerView.Adapter<ContinentListAdapter.ListPartsHolder>() {
 
-    private val items = ArrayList<Continent>()
+    private val items = mutableListOf<MutableList<Country>>()
 
 //    private val createApplicViewModel: CreateApplicViewModel by lazy {
 //        ViewModelProviders.of(context as FragmentActivity).get(CreateApplicViewModel::class.java)
@@ -38,11 +39,11 @@ ContinentListAdapter(data: ArrayList<Continent>, private val context: Context) :
 
         holder.bind(items[position])
 
-         //val adapter = CountryListAdapter(createApplicViewModel.getListParts().value!![position].listOfferItem as ArrayList<ListPartOfferItem>, context)
+         val adapter = CountryListAdapter(items[position], context)
 
         val listPartsRecyclerView = holder.binding.rvListContry
-        listPartsRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        //listPartsRecyclerView.adapter = adapter
+        listPartsRecyclerView.layoutManager = LinearLayoutManager(context)
+        listPartsRecyclerView.adapter = adapter
 
     }
 
@@ -52,7 +53,7 @@ ContinentListAdapter(data: ArrayList<Continent>, private val context: Context) :
 
     inner class ListPartsHolder(var binding: ContinentListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Continent) {
+        fun bind(item: MutableList<Country>) {
             //binding.item = item
             binding.executePendingBindings()
         }

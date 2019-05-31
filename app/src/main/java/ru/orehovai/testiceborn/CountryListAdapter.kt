@@ -11,11 +11,10 @@ import ru.orehovai.testiceborn.MainViewModel
 import ru.orehovai.testiceborn.R
 import ru.orehovai.testiceborn.databinding.CountryListItemBinding
 import ru.orehovai.testiceborn.model.Country
-import java.util.*
 
-class CountryListAdapter(data: ArrayList<Country>, private val context: Context) : RecyclerView.Adapter<CountryListAdapter.ListPartsHolder>(){
+class CountryListAdapter(data: MutableList<Country>, private val context: Context) : RecyclerView.Adapter<CountryListAdapter.CountryHolder>(){
 
-    private val items = ArrayList<Country>()
+    private val items = mutableListOf<Country>()
 
     private val mainViewModel: MainViewModel by lazy {
         ViewModelProviders.of(context as FragmentActivity).get(MainViewModel::class.java)
@@ -26,14 +25,14 @@ class CountryListAdapter(data: ArrayList<Country>, private val context: Context)
         items.addAll(data)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListPartsHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CountryHolder {
 
         val inflater = LayoutInflater.from(parent.context)
         val binding = DataBindingUtil.inflate<CountryListItemBinding>(inflater, R.layout.country_list_item, parent, false)
-        return ListPartsHolder(binding)
+        return CountryHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ListPartsHolder, position: Int) {
+    override fun onBindViewHolder(holder: CountryHolder, position: Int) {
 
         holder.bind(items[position])
     }
@@ -43,10 +42,10 @@ class CountryListAdapter(data: ArrayList<Country>, private val context: Context)
     }
 
 
-    inner class ListPartsHolder(var binding: CountryListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class CountryHolder(var binding: CountryListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Country) {
-            //binding.item = item
+            binding.item = item
             binding.executePendingBindings()
         }
     }

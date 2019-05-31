@@ -6,7 +6,6 @@ import android.databinding.DataBindingUtil
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.fragmentLaunch.observe(this, Observer { aString ->
             if (aString != null) {
                 when (aString) {
-                    "list" -> setFragment(ListCountrysFragment())
+                    "list" -> setFragment(ListCountryFragment())
 
                     else -> {
                     }

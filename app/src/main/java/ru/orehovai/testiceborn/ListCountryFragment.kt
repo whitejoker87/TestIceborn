@@ -1,6 +1,7 @@
 package ru.orehovai.testiceborn
 
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -14,7 +15,7 @@ import android.view.ViewGroup
 import ru.orehovai.testiceborn.databinding.FragmentListCountrysBinding
 
 
-class ListCountrysFragment : Fragment() {
+class ListCountryFragment : Fragment() {
 
     private val mainViewModel: MainViewModel by lazy {
         ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
@@ -26,30 +27,36 @@ class ListCountrysFragment : Fragment() {
 
 //    private lateinit var fabAddPart: FloatingActionButton
 
-    //private lateinit var adapter: ContinentListAdapter
+    private lateinit var adapter: ContinentListAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_list_countrys, container, false)
         binding.lifecycleOwner = this
 
         mainViewModel.fetchContinent()
 
-        //adapter = ContinentListAdapter(createApplicViewModel.getListParts().value!!, context!!)
+
 
         listCountryRecyclerView = binding.rvCountry
         listCountryRecyclerView.layoutManager = LinearLayoutManager(activity)
         listCountryRecyclerView.addItemDecoration(
-            DividerItemDecoration(activity!!,
-                DividerItemDecoration.VERTICAL)
+            DividerItemDecoration(
+                activity!!,
+                DividerItemDecoration.VERTICAL
+            )
         )
-        //listCountryRecyclerView.adapter = adapter
 
-//        createApplicViewModel.getListParts().observe(this, Observer { items ->
-//            if (items != null && items.size > 0) {
-//                adapter.notifyDataSetChanged()
-//            }
-//        })
+
+        mainViewModel.listContinents.observe(this, Observer { items ->
+            if (items != null && items.size > 0) {
+                adapter = ContinentListAdapter(mainViewModel.listContinents.value!!, context!!)
+                listCountryRecyclerView.adapter = adapter
+                adapter.notifyDataSetChanged()
+            }
+        })
 
         return binding.root
     }
